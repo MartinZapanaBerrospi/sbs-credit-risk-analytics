@@ -1,0 +1,22 @@
+entidad_id,entidad,activa,primer_periodo,ultimo_periodo,tipo_predominante,participacion_tipo_predominante,evento
+ALFIN,Alfin,True,2015-01,2026-07,consumo,0.725800,"Banco Azteca del Perú cambia su denominación a Alfin Banco (Res. SBS N° 3602-2021, primer mes 2021-11)"
+BANCOM,BANCOM,True,2015-01,2026-07,consumo,0.782100,Banco de Comercio pasa a publicarse como BANCOM desde 2023-09 (continuidad de la serie; el cuadro no trae nota)
+BANK_OF_CHINA,Bank of China,True,2021-07,2026-07,corporativo,1.000000,Inicia operaciones el 22/07/2020 (Res. SBS N° 1295-2020)
+BBVA,BBVA,True,2015-01,2026-07,corporativo,0.256800,"Cambio de denominación de BBVA Banco Continental a Banco BBVA Perú (Res. SBS N° 1286-2019, primer mes 2019-06)"
+BCI,BCI,True,2022-07,2026-07,corporativo,0.951200,Inicia operaciones el 15/07/2022 (Res. SBS N° 1440-2022)
+BCP,BCP,True,2015-01,2026-07,corporativo,0.330700,
+BIF,BanBif,True,2015-01,2026-07,corporativo,0.382400,Reclasificación de su cartera no minorista por tipo de crédito desde 2017-12
+CENCOSUD,Cencosud,False,2015-01,2019-02,consumo,1.000000,"Se convierte en Caja CAT Perú y sale de la banca múltiple (Res. SBS N° 753-2019, último mes 2019-02)"
+CITIBANK,Citibank,True,2015-01,2026-07,corporativo,0.786400,
+COMPARTAMOS,Compartamos,True,2025-01,2026-07,pequenas_empresas,0.421900,"Conversión de Compartamos Financiera en banco (Res. SBS N° 00348-2025, primer mes 2025-01)"
+EFECTIVA,Efectiva,True,2026-06,2026-07,consumo,0.652800,"Conversión de Financiera Efectiva en banco (Res. SBS N° 01444-2026, primer mes 2026-06)"
+FALABELLA,Falabella,True,2015-01,2026-07,consumo,0.999600,
+GNB,GNB,True,2015-01,2026-07,consumo,0.474600,
+ICBC,ICBC,True,2015-01,2026-07,corporativo,0.907400,
+INTERBANK,Interbank,True,2015-01,2026-07,corporativo,0.317000,
+MIBANCO,Mibanco,True,2015-01,2026-07,pequenas_empresas,0.812300,
+PICHINCHA,Pichincha,True,2015-01,2026-07,consumo,0.340700,"Cambio de denominación de Banco Financiero a Banco Pichincha (Res. SBS N° 3261-2018, primer mes 2018-08)"
+RIPLEY,Ripley,True,2015-01,2026-07,consumo,1.000000,
+SANTANDER,Santander,True,2015-01,2026-07,corporativo,0.642500,
+SANTANDER_CONSUMER,Santander Consumer,True,2025-06,2026-07,consumo,0.970400,"Conversión de Financiera Santander Consumer en banco (Res. SBS N° 1885-2025, primer mes 2025-06)"
+SCOTIABANK,Scotiabank,True,2015-01,2026-07,corporativo,0.303100,"Cierre de la sucursal en Panamá (Res. SBS 6229-2015, 2017-01)"

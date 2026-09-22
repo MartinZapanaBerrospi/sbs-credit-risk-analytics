@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      pipeline_completo:
+        description: "Descargar desde la SBS y el BCRP, transformar y validar"
+        type: boolean
+        default: false
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Pruebas del parser (fixtures reales) y del modelo curado
+        run: pytest -q
+
+  pipeline:
+    # Solo a pedido: descarga ~690 archivos de la SBS, así que no corre en cada push
+    if: github.event_name == 'workflow_dispatch' && inputs.pipeline_completo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m src.extract
+      - run: python -m src.transform
+      - run: python -m src.validate
+      - name: El resultado debe coincidir con lo versionado
+        run: git diff --stat --exit-code data/curated

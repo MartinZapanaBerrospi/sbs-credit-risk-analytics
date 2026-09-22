@@ -1,0 +1,8 @@
+regla,detalle,comparaciones,fallas,explicadas,peor_diferencia,tolerancia
+V1,B-2334: suma de bancos = TOTAL BANCA MÚLTIPLE (tipo × situación × mes),3058,0,0,1.2287e-05,0.0001
+V2,B-2334: suma de tipos × situación = columna 'Total créditos directos' (entidad × mes),2449,0,2,0.0101438,0.0001
+V3,B-2369: suma de bancos = TOTAL en castigos (tipo × mes),908,0,0,4.1241e-16,0.0001
+V4,Morosidad del sistema calculada desde B-2334 = morosidad contable publicada en B-220512 (pp),139,0,2,0.0588567,0.01
+V5,Morosidad por tipo de crédito calculada desde B-2334 = publicada en B-2362 (pp),1099,0,0,0.00845351,0.01
+V6,Todos los nombres de entidad publicados tienen id en data/reference/entidades.csv,33,0,0,0,0
+V7,fact_cartera tiene los 139 meses del periodo,1,0,0,0,0

@@ -1,0 +1,34 @@
+entidad_id,nombre_corto,alias,evento
+BCP,BCP,B. de Crédito del Perú (con sucursales en el exterior),
+BBVA,BBVA,B. Continental,
+BBVA,BBVA,B. BBVA Perú,"Cambio de denominación de BBVA Banco Continental a Banco BBVA Perú (Res. SBS N° 1286-2019, primer mes 2019-06)"
+SCOTIABANK,Scotiabank,Scotiabank Perú (consucursales en el exterior),
+SCOTIABANK,Scotiabank,Scotiabank Perú (con sucursales en el exterior),
+SCOTIABANK,Scotiabank,Scotiabank Perú,"Cierre de la sucursal en Panamá (Res. SBS 6229-2015, 2017-01)"
+INTERBANK,Interbank,Interbank (con sucursales en el exterior),
+INTERBANK,Interbank,Interbank,
+BIF,BanBif,B. Interamericano de Finanzas,"Reclasificación de su cartera no minorista por tipo de crédito desde 2017-12"
+PICHINCHA,Pichincha,B. Financiero,
+PICHINCHA,Pichincha,B. Pichincha,"Cambio de denominación de Banco Financiero a Banco Pichincha (Res. SBS N° 3261-2018, primer mes 2018-08)"
+BANCOM,BANCOM,B. de Comercio,
+BANCOM,BANCOM,BANCOM,"Banco de Comercio pasa a publicarse como BANCOM desde 2023-09 (continuidad de la serie; el cuadro no trae nota)"
+CITIBANK,Citibank,Citibank,
+MIBANCO,Mibanco,Mibanco,
+GNB,GNB,B. GNB,
+FALABELLA,Falabella,B. Falabella Perú,
+SANTANDER,Santander,B. Santander Perú,
+RIPLEY,Ripley,B. Ripley,
+ICBC,ICBC,B. ICBC,
+ALFIN,Alfin,B. Azteca Perú,
+ALFIN,Alfin,Alfin Banco,"Banco Azteca del Perú cambia su denominación a Alfin Banco (Res. SBS N° 3602-2021, primer mes 2021-11)"
+CENCOSUD,Cencosud,B. Cencosud,"Se convierte en Caja CAT Perú y sale de la banca múltiple (Res. SBS N° 753-2019, último mes 2019-02)"
+DEUTSCHE,Deutsche Bank,Deutsche Bank Perú,"Disolución voluntaria y liquidación (Res. SBS N° 3722-2016, último mes 2016-06)"
+BANK_OF_CHINA,Bank of China,Bank of China,"Inicia operaciones el 22/07/2020 (Res. SBS N° 1295-2020)"
+BCI,BCI,Banco BCI Perú,"Inicia operaciones el 15/07/2022 (Res. SBS N° 1440-2022)"
+BCI,BCI,B. BCI Perú,
+BCI,BCI,BCI Perú,
+COMPARTAMOS,Compartamos,Compartamos Banco,"Conversión de Compartamos Financiera en banco (Res. SBS N° 00348-2025, primer mes 2025-01)"
+SANTANDER_CONSUMER,Santander Consumer,Santander Consumer Bank,"Conversión de Financiera Santander Consumer en banco (Res. SBS N° 1885-2025, primer mes 2025-06)"
+EFECTIVA,Efectiva,B. Efectiva,"Conversión de Financiera Efectiva en banco (Res. SBS N° 01444-2026, primer mes 2026-06)"
+EFECTIVA,Efectiva,Banco Efectiva,
+SISTEMA,Banca múltiple,TOTAL BANCA MÚLTIPLE,

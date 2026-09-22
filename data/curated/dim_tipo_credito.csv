@@ -1,0 +1,8 @@
+tipo_credito,tipo_credito_nombre,segmento,orden
+corporativo,Corporativo,Mayorista,1
+grandes_empresas,Grandes empresas,Mayorista,2
+medianas_empresas,Medianas empresas,Mayorista,3
+pequenas_empresas,Pequeñas empresas,MYPE,4
+microempresas,Microempresas,MYPE,5
+consumo,Consumo,Personas,6
+hipotecario,Hipotecario,Personas,7
