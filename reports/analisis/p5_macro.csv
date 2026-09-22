@@ -1,0 +1,13 @@
+,variable,transformacion,rezago_meses,correlacion,n
+0,tasa_referencia,variación 12m,0,0.3195,106
+1,tasa_referencia,variación 12m,6,0.5901,100
+2,tasa_referencia,variación 12m,12,0.7053,94
+3,tasa_referencia,variación 12m,18,0.4696,88
+4,inflacion_12m,variación 12m,0,-0.1965,106
+5,inflacion_12m,variación 12m,6,0.2788,100
+6,inflacion_12m,variación 12m,12,0.6913,94
+7,inflacion_12m,variación 12m,18,0.8000,88
+8,pbi_var_12m,nivel,0,-0.2092,106
+9,pbi_var_12m,nivel,6,-0.2518,100
+10,pbi_var_12m,nivel,12,0.0896,94
+11,pbi_var_12m,nivel,18,0.1546,88
