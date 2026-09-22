@@ -166,14 +166,16 @@ El informe **no se publica en la web de Power BI**. Para que se pueda revisar de
 
 ## 7. Criterios de éxito
 
-- [ ] Un solo comando descarga todo y es idempotente: no vuelve a bajar lo que ya tiene.
-- [ ] El 100 % de los nombres de entidad publicados se asigna a un id de `dim_entidad`.
-- [ ] La suma de las entidades coincide con la fila "TOTAL BANCA MÚLTIPLE" de cada mes
+Todos cumplidos al cerrar el proyecto (2026-09-22):
+
+- [x] Un solo comando descarga todo y es idempotente: no vuelve a bajar lo que ya tiene.
+- [x] El 100 % de los nombres de entidad publicados se asigna a un id de `dim_entidad`.
+- [x] La suma de las entidades coincide con la fila "TOTAL BANCA MÚLTIPLE" de cada mes
       (diferencia relativa < 0,01 %).
-- [ ] La morosidad calculada desde B-2334 coincide con la publicada en B-2362 para el total
+- [x] La morosidad calculada desde B-2334 coincide con la publicada en B-2362 para el total
       del sistema (diferencia < 0,01 puntos porcentuales).
-- [ ] Cada pregunta P1–P5 tiene una página del tablero y una conclusión escrita en el README.
-- [ ] Pruebas automáticas del parser y de las validaciones en GitHub Actions.
+- [x] Cada pregunta P1–P5 tiene una página del tablero y una conclusión escrita en el README.
+- [x] Pruebas automáticas del parser y de las validaciones en GitHub Actions.
 
 ## 8. Plan de fases
 

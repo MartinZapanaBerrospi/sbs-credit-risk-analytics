@@ -1,0 +1,72 @@
+table fact_macro
+	isHidden
+	lineageTag: 389b212d-0391-577c-be08-0cefcecb7c61
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isHidden
+		lineageTag: bac07734-94b2-5d5f-b78f-49512cf1ee07
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column tasa_referencia
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 724ebe20-b426-5567-aad2-aba98fce8495
+		summarizeBy: sum
+		sourceColumn: tasa_referencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column inflacion_12m
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b3524cb9-5dd1-52c0-95ba-9cf010a5eaf5
+		summarizeBy: sum
+		sourceColumn: inflacion_12m
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_cambio
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: eb8621d9-27aa-5e8e-85d9-8ea604be3f47
+		summarizeBy: sum
+		sourceColumn: tipo_cambio
+
+		annotation SummarizationSetBy = Automatic
+
+	column pbi_indice
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: f5c1f084-4284-50f2-b209-5593f32e9c53
+		summarizeBy: sum
+		sourceColumn: pbi_indice
+
+		annotation SummarizationSetBy = Automatic
+
+	column pbi_var_12m
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 181d2082-4c96-5392-8ff5-e9a7248ca2e1
+		summarizeBy: sum
+		sourceColumn: pbi_var_12m
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_macro = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "fact_macro.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"fecha", type date}, {"tasa_referencia", type number}, {"inflacion_12m", type number}, {"tipo_cambio", type number}, {"pbi_indice", type number}, {"pbi_var_12m", type number}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

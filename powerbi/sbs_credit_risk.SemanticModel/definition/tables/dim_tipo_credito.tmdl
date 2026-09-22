@@ -1,0 +1,48 @@
+table dim_tipo_credito
+	lineageTag: e8c2fa5d-7ec5-557a-bcc1-2303a00b411d
+
+	column tipo_credito
+		dataType: string
+		lineageTag: 7a9183fe-0c03-56e9-87fc-d512deabf997
+		summarizeBy: none
+		sourceColumn: tipo_credito
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_credito_nombre
+		dataType: string
+		lineageTag: 396bbc15-3554-552f-be11-3c35b0cb11e2
+		summarizeBy: none
+		sourceColumn: tipo_credito_nombre
+		sortByColumn: orden
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmento
+		dataType: string
+		lineageTag: aafdf26c-ad7d-5fb4-aaf7-c716e10ea723
+		summarizeBy: none
+		sourceColumn: segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column orden
+		dataType: int64
+		formatString: 0
+		lineageTag: 93e620f3-6060-5cf0-b01e-a04b5d127ba9
+		summarizeBy: none
+		sourceColumn: orden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_tipo_credito = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "dim_tipo_credito.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"tipo_credito", type text}, {"tipo_credito_nombre", type text}, {"segmento", type text}, {"orden", Int64.Type}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

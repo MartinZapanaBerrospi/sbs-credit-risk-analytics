@@ -1,0 +1,6 @@
+/// Carpeta data/curated del repositorio, con barra final. Cámbiala al clonar el proyecto en otra ruta.
+expression RutaDatos = "C:\Users\marzabe\GitHub\sbs-credit-risk-analytics\data\curated\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 625ec555-2a10-57c8-abc7-58c219f869bb
+
+	annotation PBI_ResultType = Text
+

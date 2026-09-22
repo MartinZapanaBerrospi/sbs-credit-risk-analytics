@@ -1,0 +1,86 @@
+table dim_fecha
+	lineageTag: 9555acbd-02b4-5d22-8ce4-577456e6feb8
+
+	column periodo
+		dataType: string
+		lineageTag: 639cc07d-4592-5ae8-9cb9-4607dcd113d5
+		summarizeBy: none
+		sourceColumn: periodo
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isKey
+		lineageTag: e07e723f-1aa2-5afe-9670-2c08c72d3a81
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: f425b724-0257-5f35-a9de-78b6a5a18212
+		summarizeBy: none
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b1da104-7957-58fc-9e67-bc3d1b73479c
+		summarizeBy: none
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_nombre
+		dataType: string
+		lineageTag: c2a8bb5c-1f64-5835-8330-37e5d8b6198b
+		summarizeBy: none
+		sourceColumn: mes_nombre
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo_etiqueta
+		dataType: string
+		lineageTag: 46b9bf67-6034-54e0-a8cc-8ca478b50587
+		summarizeBy: none
+		sourceColumn: periodo_etiqueta
+		sortByColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: string
+		lineageTag: 6bed99b9-6b77-5436-a522-4309230d9878
+		summarizeBy: none
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column hito
+		dataType: string
+		lineageTag: d95fddbe-ee55-5fc0-a971-e4d722edb320
+		summarizeBy: none
+		sourceColumn: hito
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_fecha = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "dim_fecha.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"periodo", type text}, {"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"mes_nombre", type text}, {"periodo_etiqueta", type text}, {"trimestre", type text}, {"hito", type text}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

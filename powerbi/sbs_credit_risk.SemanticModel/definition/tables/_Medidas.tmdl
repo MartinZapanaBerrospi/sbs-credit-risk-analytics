@@ -1,0 +1,246 @@
+table _Medidas
+	lineageTag: 25d12681-58b5-5b48-ad40-2f4a7552de76
+
+	/// Saldo de créditos directos en miles de S/ al último mes del contexto (los saldos no se suman entre meses).
+	measure 'Créditos directos' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( SUM ( fact_cartera[directos] ), dim_fecha[fecha] = f )
+		formatString: #,##0
+		displayFolder: 1. Cartera
+		lineageTag: 497cf381-c89c-58bc-9e84-4d042da017d3
+
+	measure 'Créditos directos (S/ miles de millones)' = [Créditos directos] / 1e6
+		formatString: #,##0.0
+		displayFolder: 1. Cartera
+		lineageTag: 79cc7a97-5c45-5c80-afed-c71cb0059358
+
+	/// Créditos vencidos y en cobranza judicial, miles de S/.
+	measure 'Atrasados' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( SUM ( fact_cartera[atrasados] ), dim_fecha[fecha] = f )
+		formatString: #,##0
+		displayFolder: 1. Cartera
+		lineageTag: bc255c51-c49f-51de-96f1-3fde1b84a6a9
+
+	measure 'Refinanciados y reestructurados' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( SUM ( fact_cartera[refinanciados_reestructurados] ), dim_fecha[fecha] = f )
+		formatString: #,##0
+		displayFolder: 1. Cartera
+		lineageTag: d5b5b977-8003-5991-8933-aa5f77070f3e
+
+	/// Atrasados / créditos directos.
+	measure 'Morosidad' = DIVIDE ( [Atrasados], [Créditos directos] )
+		formatString: 0.00%
+		displayFolder: 1. Cartera
+		lineageTag: 3bfbeb69-4ee7-5459-b4ff-58679da0e341
+
+	/// Cartera de alto riesgo: (atrasados + refinanciados y reestructurados) / créditos directos.
+	measure 'CAR' = DIVIDE ( [Atrasados] + [Refinanciados y reestructurados], [Créditos directos] )
+		formatString: 0.00%
+		displayFolder: 1. Cartera
+		lineageTag: 44e412f3-4902-5aa2-b771-89b84a13837c
+
+	measure 'Morosidad hace 12 meses' =
+			VAR f = EOMONTH ( MAX ( dim_fecha[fecha] ), -12 )
+			RETURN
+			    CALCULATE ( [Morosidad], REMOVEFILTERS ( dim_fecha ), dim_fecha[fecha] = f )
+		formatString: 0.00%
+		displayFolder: 1. Cartera
+		lineageTag: 4a137522-32c7-5a2a-8a34-cd0ce0b24cbd
+
+	/// Cambio en puntos porcentuales frente al mismo mes del año anterior.
+	measure 'Var. morosidad 12 meses (pp)' =
+			VAR antes = [Morosidad hace 12 meses]
+			RETURN
+			    IF ( NOT ISBLANK ( antes ), ( [Morosidad] - antes ) * 100 )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: 1. Cartera
+		lineageTag: 20aac572-8018-5d61-a89a-b64f84973144
+
+	/// Morosidad sin las financieras convertidas en banco en 2025-2026 (perímetro constante).
+	measure 'Morosidad sin bancos nuevos' = CALCULATE ( [Morosidad], NOT dim_entidad[entidad_id] IN { "COMPARTAMOS", "SANTANDER_CONSUMER", "EFECTIVA" } )
+		formatString: 0.00%
+		displayFolder: 1. Cartera
+		lineageTag: 33566e88-e9fd-53da-b8ac-b784653dcafb
+
+	measure 'Participación en la cartera del tipo' = DIVIDE ( [Créditos directos], CALCULATE ( [Créditos directos], REMOVEFILTERS ( dim_tipo_credito ) ) )
+		formatString: 0.0%
+		displayFolder: 1. Cartera
+		lineageTag: 7f131e8d-07ef-52b2-91ac-f2e4949c6e60
+
+	/// Flujo mensual de créditos castigados, miles de S/.
+	measure 'Castigos del mes' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( SUM ( fact_castigos[castigos] ), dim_fecha[fecha] = f )
+		formatString: #,##0
+		displayFolder: 2. Castigos
+		lineageTag: 3156fe39-e89e-5e5c-8eff-e214a93183e4
+
+	measure 'Castigos del mes (S/ millones)' = [Castigos del mes] / 1e3
+		formatString: #,##0
+		displayFolder: 2. Castigos
+		lineageTag: 7ea51cc6-82e7-5c2c-8256-30f4fee4f40d
+
+	/// Suma de los últimos 12 flujos mensuales. Empieza en dic-2016: en 2015 la SBS publicaba los castigos por trimestre.
+	measure 'Castigos 12 meses' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			VAR ini = EOMONTH ( f, -12 )
+			RETURN
+			    IF (
+			        f >= DATE ( 2016, 12, 31 ),
+			        COALESCE (
+			            CALCULATE ( SUM ( fact_castigos[castigos] ), REMOVEFILTERS ( dim_fecha ), dim_fecha[fecha] > ini, dim_fecha[fecha] <= f ),
+			            0
+			        )
+			    )
+		formatString: #,##0
+		displayFolder: 2. Castigos
+		lineageTag: 404ad106-08f1-50c0-ae4c-fddc7bf54d2a
+
+	measure 'Castigos 12 meses (S/ miles de millones)' = [Castigos 12 meses] / 1e6
+		formatString: #,##0.0
+		displayFolder: 2. Castigos
+		lineageTag: cf7c3156-a93d-556d-9127-0cdb7a779b92
+
+	/// (Atrasados + castigos de 12 meses) / (créditos directos + castigos de 12 meses).
+	measure 'Morosidad ajustada' =
+			VAR c = [Castigos 12 meses]
+			RETURN
+			    IF ( NOT ISBLANK ( c ), DIVIDE ( [Atrasados] + c, [Créditos directos] + c ) )
+		formatString: 0.00%
+		displayFolder: 2. Castigos
+		lineageTag: 8db286a0-88e9-5142-b20b-6f37533ea05e
+
+	measure 'Brecha de mora oculta (pp)' =
+			VAR a = [Morosidad ajustada]
+			RETURN
+			    IF ( NOT ISBLANK ( a ), ( a - [Morosidad] ) * 100 )
+		formatString: 0.00
+		displayFolder: 2. Castigos
+		lineageTag: d5655721-e844-546d-aa98-857a3a385f95
+
+	measure 'Participación en el sistema' = DIVIDE ( [Créditos directos], CALCULATE ( [Créditos directos], REMOVEFILTERS ( dim_entidad ) ) )
+		formatString: 0.0%
+		displayFolder: 3. Bancos
+		lineageTag: b4e036e0-56fb-5841-88e2-dd1bc562af0b
+
+	measure 'Morosidad del sistema' = CALCULATE ( [Morosidad], REMOVEFILTERS ( dim_entidad ) )
+		formatString: 0.00%
+		displayFolder: 3. Bancos
+		lineageTag: aa5f8c41-6c51-598e-ad40-b527511d8af8
+
+	measure 'Brecha vs. sistema (pp)' =
+			VAR m = [Morosidad]
+			RETURN
+			    IF ( NOT ISBLANK ( m ), ( m - [Morosidad del sistema] ) * 100 )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: 3. Bancos
+		lineageTag: 62a76b5f-1482-55c3-8e8b-384fb2cd4616
+
+	measure 'Aporte a los atrasados del sistema' = DIVIDE ( [Atrasados], CALCULATE ( [Atrasados], REMOVEFILTERS ( dim_entidad ) ) )
+		formatString: 0.0%
+		displayFolder: 3. Bancos
+		lineageTag: 22959174-6243-5465-804f-b29445cccbb2
+
+	/// % de créditos con más de 90 días de atraso (B-220512). No se abre por tipo de crédito.
+	measure 'Mora > 90 días' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    IF (
+			        NOT ISFILTERED ( dim_tipo_credito ),
+			        IF (
+			            HASONEVALUE ( dim_entidad[entidad_id] ),
+			            CALCULATE ( MAX ( fact_morosidad_dias[mora_90d] ), dim_fecha[fecha] = f ),
+			            IF (
+			                NOT ISFILTERED ( dim_entidad ),
+			                CALCULATE ( SUM ( fact_sistema_publicado[valor] ), fact_sistema_publicado[metrica] = "mora_90d", dim_fecha[fecha] = f )
+			            )
+			        ) / 100
+			    )
+		formatString: 0.00%
+		displayFolder: 3. Bancos
+		lineageTag: cde43e10-c83c-59eb-bafb-9724137cd2bc
+
+	/// Total publicado por la SBS: un deudor con créditos en varios bancos cuenta una sola vez, por eso no es la suma de bancos.
+	measure 'Deudores del sistema' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    IF (
+			        HASONEVALUE ( dim_tipo_credito[tipo_credito] ) && NOT ISBLANK ( SELECTEDVALUE ( dim_tipo_credito[tipo_credito] ) ),
+			        CALCULATE ( SUM ( fact_sistema_publicado[valor] ), fact_sistema_publicado[metrica] = "deudores", dim_fecha[fecha] = f ),
+			        IF (
+			            NOT ISFILTERED ( dim_tipo_credito ),
+			            CALCULATE (
+			                SUM ( fact_sistema_publicado[valor] ),
+			                fact_sistema_publicado[metrica] = "deudores",
+			                fact_sistema_publicado[tipo_credito] = "total",
+			                dim_fecha[fecha] = f,
+			                REMOVEFILTERS ( dim_tipo_credito )
+			            )
+			        )
+			    )
+		formatString: #,##0
+		displayFolder: 4. Deudores
+		lineageTag: 8c94c763-a7c5-5501-80f8-d1db365bc918
+
+	measure 'Crédito promedio por deudor (S/)' = DIVIDE ( CALCULATE ( [Créditos directos], REMOVEFILTERS ( dim_entidad ) ) * 1000, [Deudores del sistema] )
+		formatString: #,##0
+		displayFolder: 4. Deudores
+		lineageTag: 02693b92-cb71-545f-9c19-2e74538f1b71
+
+	/// BCRP, serie PD04722MM.
+	measure 'Tasa de referencia' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( MAX ( fact_macro[tasa_referencia] ), dim_fecha[fecha] = f ) / 100
+		formatString: 0.00%
+		displayFolder: 5. Macro
+		lineageTag: 9a28bfd6-063e-5dc9-b784-cc8f6e3b0238
+
+	/// BCRP, serie PN01273PM (IPC Lima Metropolitana).
+	measure 'Inflación 12 meses' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( MAX ( fact_macro[inflacion_12m] ), dim_fecha[fecha] = f ) / 100
+		formatString: 0.00%
+		displayFolder: 5. Macro
+		lineageTag: fca32194-1edf-5bca-ba58-e2275711ee2f
+
+	/// BCRP, serie PN01770AM.
+	measure 'Crecimiento del PBI 12 meses' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( MAX ( fact_macro[pbi_var_12m] ), dim_fecha[fecha] = f ) / 100
+		formatString: 0.0%
+		displayFolder: 5. Macro
+		lineageTag: f9ef2d38-be37-54f8-9bba-f0909f8b34a4
+
+	measure 'Corte' = "Corte: " & FORMAT ( MAX ( dim_fecha[fecha] ), "mmm yyyy" )
+		displayFolder: 6. Etiquetas
+		lineageTag: 965d3593-1bcc-5c0d-a145-9df6610a8405
+
+	measure 'Hito del mes' =
+			VAR f = MAX ( dim_fecha[fecha] )
+			RETURN
+			    CALCULATE ( MAX ( dim_fecha[hito] ), dim_fecha[fecha] = f )
+		displayFolder: 6. Etiquetas
+		lineageTag: 21b78b02-f2e1-5d5c-93b7-aabc2c2b43be
+
+	column Columna
+		dataType: string
+		isHidden
+		lineageTag: 679bbd09-9b5e-53c9-9b65-c35d235ac37c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Columna]
+
+	partition _Medidas = calculated
+		mode: import
+		source = ROW ( "Columna", BLANK () )
+
+	annotation PBI_Id = a93a5d81cb085d97b339c84661035ca5

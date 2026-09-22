@@ -1,0 +1,54 @@
+table fact_castigos
+	isHidden
+	lineageTag: 9ebb5882-6ca2-59e3-8a64-4f471a73c057
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isHidden
+		lineageTag: 10cb913f-bd95-52e4-b39b-41b0f2accaf4
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column entidad_id
+		dataType: string
+		isHidden
+		lineageTag: 10d5a12c-d6ff-5a4d-ba50-804143ca1489
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_credito
+		dataType: string
+		isHidden
+		lineageTag: 913fbf29-6588-5a01-8852-444316680593
+		summarizeBy: none
+		sourceColumn: tipo_credito
+
+		annotation SummarizationSetBy = Automatic
+
+	column castigos
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 50839fac-1a4e-58d7-9e95-7c8f588c1e8d
+		summarizeBy: sum
+		sourceColumn: castigos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_castigos = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "fact_castigos.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"fecha", type date}, {"entidad_id", type text}, {"tipo_credito", type text}, {"castigos", type number}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

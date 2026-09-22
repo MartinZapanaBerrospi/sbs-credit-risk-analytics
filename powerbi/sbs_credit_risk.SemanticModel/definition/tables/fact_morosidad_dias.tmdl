@@ -1,0 +1,81 @@
+table fact_morosidad_dias
+	isHidden
+	lineageTag: d28d068b-abe2-5376-8b90-ff843a5bfbca
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isHidden
+		lineageTag: b3bc6da2-8f96-590a-a884-c2a124b71119
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column entidad_id
+		dataType: string
+		isHidden
+		lineageTag: c1180f78-948a-5445-9731-d133f2c0c2f3
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column mora_120d
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 1a5a7739-c862-559e-887d-a2651b711202
+		summarizeBy: sum
+		sourceColumn: mora_120d
+
+		annotation SummarizationSetBy = Automatic
+
+	column mora_30d
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 79cdeff1-6f9a-5ee1-9f3c-ef085ae0fcc1
+		summarizeBy: sum
+		sourceColumn: mora_30d
+
+		annotation SummarizationSetBy = Automatic
+
+	column mora_60d
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: a9128a78-9d50-5a28-8c14-595719b82597
+		summarizeBy: sum
+		sourceColumn: mora_60d
+
+		annotation SummarizationSetBy = Automatic
+
+	column mora_90d
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2cb1f730-1280-50bd-a3f9-b5e3678e00e5
+		summarizeBy: sum
+		sourceColumn: mora_90d
+
+		annotation SummarizationSetBy = Automatic
+
+	column morosidad_contable
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: dbe21c3d-a609-5c7f-bae0-b12219f8cb83
+		summarizeBy: sum
+		sourceColumn: morosidad_contable
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_morosidad_dias = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "fact_morosidad_dias.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"fecha", type date}, {"entidad_id", type text}, {"mora_120d", type number}, {"mora_30d", type number}, {"mora_60d", type number}, {"mora_90d", type number}, {"morosidad_contable", type number}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

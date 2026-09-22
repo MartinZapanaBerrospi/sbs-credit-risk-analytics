@@ -1,0 +1,55 @@
+relationship ed76c211-0f4c-5d60-9354-1a0dd3f09c9d
+	fromColumn: fact_cartera.fecha
+	toColumn: dim_fecha.fecha
+
+relationship e457bb40-1089-5b29-b475-b3b22386c73b
+	fromColumn: fact_cartera.entidad_id
+	toColumn: dim_entidad.entidad_id
+
+relationship 170f81dc-d4cc-5447-9a5f-1ff3f7ed7951
+	fromColumn: fact_cartera.tipo_credito
+	toColumn: dim_tipo_credito.tipo_credito
+
+relationship b1171728-062b-5ad6-8056-12df555e1636
+	fromColumn: fact_castigos.fecha
+	toColumn: dim_fecha.fecha
+
+relationship ca69a6e9-65b4-5321-a0e5-7792e75e7c8f
+	fromColumn: fact_castigos.entidad_id
+	toColumn: dim_entidad.entidad_id
+
+relationship 7cf33d4f-8120-5cc7-8233-0a18238d65b5
+	fromColumn: fact_castigos.tipo_credito
+	toColumn: dim_tipo_credito.tipo_credito
+
+relationship 21ccf4f3-360b-536c-b7db-2d57330c7cda
+	fromColumn: fact_deudores.fecha
+	toColumn: dim_fecha.fecha
+
+relationship 9244995a-2970-572c-809d-5cd1cbb74c07
+	fromColumn: fact_deudores.entidad_id
+	toColumn: dim_entidad.entidad_id
+
+relationship 2b0a3f72-a258-5690-895d-04deba8977dd
+	fromColumn: fact_deudores.tipo_credito
+	toColumn: dim_tipo_credito.tipo_credito
+
+relationship 24044be7-8cf3-5f03-aa37-8480753deff9
+	fromColumn: fact_morosidad_dias.fecha
+	toColumn: dim_fecha.fecha
+
+relationship 4f3f4e67-cb85-5c6d-bd99-98491b414023
+	fromColumn: fact_morosidad_dias.entidad_id
+	toColumn: dim_entidad.entidad_id
+
+relationship fc14d84e-6e9d-5f4a-8a82-a3e21b79f55c
+	fromColumn: fact_sistema_publicado.fecha
+	toColumn: dim_fecha.fecha
+
+relationship 49f37cbd-7542-5065-ae74-b995bc4a66e5
+	fromColumn: fact_sistema_publicado.tipo_credito
+	toColumn: dim_tipo_credito.tipo_credito
+
+relationship 059f44a1-6679-5a69-ae3b-81cd6e78cbf1
+	fromColumn: fact_macro.fecha
+	toColumn: dim_fecha.fecha

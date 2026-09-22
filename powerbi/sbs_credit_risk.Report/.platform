@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "sbs_credit_risk"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b10bc4b9-c8c3-5149-ad10-eef17a0cc114"
+  }
+}

@@ -1,0 +1,30 @@
+model Model
+	culture: es-PE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	discourageImplicitMeasures
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["RutaDatos", "dim_fecha", "dim_entidad", "dim_tipo_credito", "fact_cartera", "fact_castigos", "fact_deudores", "fact_morosidad_dias", "fact_sistema_publicado", "fact_macro"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_fecha
+ref table dim_entidad
+ref table dim_tipo_credito
+ref table fact_cartera
+ref table fact_castigos
+ref table fact_deudores
+ref table fact_morosidad_dias
+ref table fact_sistema_publicado
+ref table fact_macro
+ref table _Medidas
+
+ref expression RutaDatos
+
+ref cultureInfo es-PE
+

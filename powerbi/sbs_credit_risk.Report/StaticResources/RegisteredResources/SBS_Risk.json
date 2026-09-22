@@ -1,0 +1,104 @@
+{
+  "name": "SBS_Risk",
+  "dataColors": [
+    "#2a78d6",
+    "#eb6834",
+    "#1baf7a",
+    "#eda100",
+    "#e87ba4",
+    "#008300",
+    "#4a3aa7",
+    "#e34948"
+  ],
+  "background": "#fcfcfb",
+  "foreground": "#0b0b0b",
+  "tableAccent": "#2a78d6",
+  "good": "#008300",
+  "bad": "#e34948",
+  "neutral": "#8a8984",
+  "textClasses": {
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#52514e",
+      "fontSize": 9
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#0b0b0b",
+      "fontSize": 11
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#0b0b0b",
+      "fontSize": 12
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#0b0b0b",
+      "fontSize": 24
+    }
+  },
+  "visualStyles": {
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#fcfcfb"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#fcfcfb"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          {
+            "gridHorizontal": true,
+            "gridHorizontalColor": {
+              "solid": {
+                "color": "#e4e3df"
+              }
+            },
+            "gridVertical": false
+          }
+        ],
+        "columnHeaders": [
+          {
+            "backColor": {
+              "solid": {
+                "color": "#fcfcfb"
+              }
+            }
+          }
+        ],
+        "values": [
+          {
+            "backColorPrimary": {
+              "solid": {
+                "color": "#fcfcfb"
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": "#f3f2ef"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

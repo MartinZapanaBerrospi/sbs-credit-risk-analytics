@@ -1,0 +1,53 @@
+table fact_sistema_publicado
+	isHidden
+	lineageTag: 1d496547-efea-58c3-9fed-be7157a53fc7
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isHidden
+		lineageTag: f04a8425-edc4-5a3f-9987-3a6edb9edbde
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column metrica
+		dataType: string
+		lineageTag: 079a8d70-c633-57a4-ba1a-5d554ec4e69e
+		summarizeBy: none
+		sourceColumn: metrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_credito
+		dataType: string
+		isHidden
+		lineageTag: bffadca2-294d-59eb-ad9e-3fa82d574cf1
+		summarizeBy: none
+		sourceColumn: tipo_credito
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2678d2cf-2bde-5466-b8f2-a339d0fad475
+		summarizeBy: sum
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sistema_publicado = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "fact_sistema_publicado.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"fecha", type date}, {"metrica", type text}, {"tipo_credito", type text}, {"valor", type number}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

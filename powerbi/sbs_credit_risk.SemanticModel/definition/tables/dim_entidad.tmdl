@@ -1,0 +1,79 @@
+table dim_entidad
+	lineageTag: 076b0b9a-acf2-507a-95e7-2175c233973d
+
+	column entidad_id
+		dataType: string
+		lineageTag: b9434000-3c0c-5105-bfeb-2693131c52d5
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column entidad
+		dataType: string
+		lineageTag: 58267481-4c90-5c43-a383-677dfc1c77fb
+		summarizeBy: none
+		sourceColumn: entidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column activa
+		dataType: boolean
+		lineageTag: 028a9bd5-2f9b-526f-88f9-5a96b990e0e7
+		summarizeBy: none
+		sourceColumn: activa
+
+		annotation SummarizationSetBy = Automatic
+
+	column primer_periodo
+		dataType: string
+		lineageTag: 245ae0e9-0f12-55cb-96bd-144f1989d089
+		summarizeBy: none
+		sourceColumn: primer_periodo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultimo_periodo
+		dataType: string
+		lineageTag: 2bbd7683-80f1-5ba9-bb14-c0eb870e2a0e
+		summarizeBy: none
+		sourceColumn: ultimo_periodo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_predominante
+		dataType: string
+		lineageTag: 6d2862b3-6517-5693-bd01-ef38f15acfd9
+		summarizeBy: none
+		sourceColumn: tipo_predominante
+
+		annotation SummarizationSetBy = Automatic
+
+	column participacion_tipo_predominante
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 9dc473a7-269c-58d1-9ff3-9975fc6fc7c2
+		summarizeBy: none
+		sourceColumn: participacion_tipo_predominante
+
+		annotation SummarizationSetBy = Automatic
+
+	column evento
+		dataType: string
+		lineageTag: d372b825-d6c9-504f-bfdb-2432cef65ad5
+		summarizeBy: none
+		sourceColumn: evento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_entidad = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "dim_entidad.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"entidad_id", type text}, {"entidad", type text}, {"activa", type logical}, {"primer_periodo", type text}, {"ultimo_periodo", type text}, {"tipo_predominante", type text}, {"participacion_tipo_predominante", type number}, {"evento", type text}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,81 @@
+table fact_cartera
+	isHidden
+	lineageTag: 1c0b1676-e213-52df-8bf6-a16e922b02de
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		isHidden
+		lineageTag: bcade7cf-eb56-52cc-8249-9d1643c5791c
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column entidad_id
+		dataType: string
+		isHidden
+		lineageTag: 700d7f09-8bf4-575f-8403-3e0afdbccc13
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_credito
+		dataType: string
+		isHidden
+		lineageTag: 31a72619-3b16-5aaf-9eee-5391091d8997
+		summarizeBy: none
+		sourceColumn: tipo_credito
+
+		annotation SummarizationSetBy = Automatic
+
+	column atrasados
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 6ac37f0b-bc5e-55f9-ab6e-8e36228fe1dc
+		summarizeBy: sum
+		sourceColumn: atrasados
+
+		annotation SummarizationSetBy = Automatic
+
+	column refinanciados_reestructurados
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: ca0c20bf-e3d9-59c3-93c3-c8ce2553a65c
+		summarizeBy: sum
+		sourceColumn: refinanciados_reestructurados
+
+		annotation SummarizationSetBy = Automatic
+
+	column vigentes
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: fbea1fd9-a8f7-5ee4-85ab-f539b3b270d5
+		summarizeBy: sum
+		sourceColumn: vigentes
+
+		annotation SummarizationSetBy = Automatic
+
+	column directos
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 3a31465f-87fe-5ba8-b349-65deca0ac0f1
+		summarizeBy: sum
+		sourceColumn: directos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_cartera = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaDatos & "fact_cartera.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Encabezados = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    Tipos = Table.TransformColumnTypes(Encabezados, {{"fecha", type date}, {"entidad_id", type text}, {"tipo_credito", type text}, {"atrasados", type number}, {"refinanciados_reestructurados", type number}, {"vigentes", type number}, {"directos", type number}}, "en-US")
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

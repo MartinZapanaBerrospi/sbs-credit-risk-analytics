@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "p1_sistema",
+    "p2_tipos",
+    "p3_bancos",
+    "p4_mora_oculta",
+    "p5_macro",
+    "p6_notas"
+  ],
+  "activePageName": "p1_sistema"
+}
